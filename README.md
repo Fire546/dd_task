@@ -109,7 +109,7 @@ MySQL доступен на порту `3307` (user: `laravel`, password: `secre
 
 ```bash
 php artisan migrate
-php artisan db:seed   # если есть сиды
+php artisan db:seed
 ```
 
 ---
