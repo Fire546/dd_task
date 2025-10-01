@@ -28,11 +28,28 @@ REST API для управления пациентами и приёмами (*
 ## Установка без Docker
 
 ```bash
-git clone <URL репозитория>
-cd <имя_папки>
+git clone git@github.com:Fire546/dd_task.git
+cd dd_task
 
 composer install
 cp .env.example .env
+Заполнить `.env` (минимально для Docker):
+   ```env
+   APP_NAME=Laravel
+   APP_ENV=local
+   APP_KEY=
+   APP_DEBUG=true
+   APP_URL=http://localhost:8000
+
+   LOG_CHANNEL=stack
+   LOG_LEVEL=debug
+
+   DB_CONNECTION=mysql
+   DB_HOST=mysql
+   DB_PORT=3306
+   DB_DATABASE=clinic
+   DB_USERNAME=laravel
+   DB_PASSWORD=secret
 php artisan key:generate
 php artisan migrate
 
