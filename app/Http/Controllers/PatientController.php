@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patient;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Throwable;
 
@@ -161,5 +162,39 @@ class PatientController extends Controller
                 'message' => 'failed to delete patient',
             ], 500);
         }
+    }
+
+    
+    public function byPatient(string $patient, Request $request)
+    {
+        if (!ctype_digit((string)$patient)) {
+            return response()->json(['status'=>'error','message'=>'invalid patient id'], 400);
+        }
+
+        $patientModel = Patient::find($patient);
+        if ($patientModel === null) {
+            return response()->json(['status'=>'error','message'=>'patient not found'], 404);
+        }
+
+        $perPage = min((int)$request->query('per_page', 10), 100);
+        $order   = $request->query('order', 'asc') === 'desc' ? 'desc' : 'asc';
+
+        $p = Appointment::where('patient_id', $patient)
+            ->orderBy('date_time', $order)
+            ->paginate($perPage);
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'patient appointments',
+            'data'    => $p->items(),
+            'meta'    => [
+                'current_page' => $p->currentPage(),
+                'per_page'     => $p->perPage(),
+                'total'        => $p->total(),
+                'last_page'    => $p->lastPage(),
+                'next'         => $p->nextPageUrl(),
+                'prev'         => $p->previousPageUrl(),
+            ],
+        ]);
     }
 }

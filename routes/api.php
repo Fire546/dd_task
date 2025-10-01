@@ -7,5 +7,5 @@ use App\Http\Controllers\AppointmentController;
 Route::apiResource("patients", PatientController::class);
 Route::apiResource("appointments", AppointmentController::class);
 
-Route::get('patients/{patient}/appointments', [AppointmentController::class,'byPatient']);
+Route::get('patients/{patient}/appointments', [PatientController::class,'byPatient']);
 Route::post('appointments/{appointment}/cancel', [AppointmentController::class,'cancel']);

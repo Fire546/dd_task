@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('doctor_name');
             $table->string('specialization');
             $table->dateTime('date_time');
-            $table->enum('status', ['scheduled','cancelld', 'completed'])->default('scheduled');
+            $table->enum('status', ['scheduled','cancelled', 'completed'])->default('scheduled');
             $table->timestamps();
 
             $table->unique(['patient_id','date_time']);
